@@ -1,0 +1,31 @@
+KONVERTER KOORDINAT CSV – VERSI 2
+
+CARA PAKAI
+1. Ekstrak ZIP jika menggunakan paket lengkap.
+2. Klik dua kali "Konverter_Koordinat_CSV_v2.html" untuk membuka di Chrome/Edge.
+3. Klik "Pilih file CSV" dan masukkan CSV berisi koordinat.
+4. Biarkan "Jenis koordinat dalam CSV" = "Deteksi otomatis".
+5. Pilih zona UTM dan belahan bumi sesuai data survei; nilai awal 48S hanya asumsi.
+6. Periksa pemetaan kolom nama, kolom 1 (X atau Latitude), kolom 2 (Y atau Longitude).
+7. Pastikan jumlah titik valid dan nilai hasil masuk akal.
+8. Klik "Unduh CSV hasil" untuk Google Earth Pro → File → Import.
+   Atau klik "Unduh KML Google Earth" dan buka KML langsung.
+
+FORMAT 1: KOORDINAT UTM (X/Y dalam meter)
+Nomor,Latitude,Longitude
+MT-1,288822.816,9813834.248
+(Angka memakai UTM, walaupun judul kolom masih Latitude/Longitude.)
+
+FORMAT 2: SUDAH LATITUDE/LONGITUDE (derajat)
+Nomor,Latitude,Longitude
+MT-1,-1.683365092,103.101739169
+(Pada format ini website tidak akan mengonversi ulang.)
+
+File juga dapat menggunakan judul kolom Easting/Northing dan pemisah titik koma.
+Bila menggunakan angka desimal berkoma, simpan sebagai CSV ber-pemisah titik koma.
+
+PERINGATAN
+Sistem sumber WGS84 / UTM Zona 48S (EPSG:32748) adalah ASUMSI untuk data contoh.
+Pastikan referensi datum, zona dan hemisfer di gambar CAD/survei sebelum digunakan
+untuk laporan teknik, koordinat pengeboran, atau desain jembatan.
+Semua proses dilakukan offline dalam browser; data CSV tidak diunggah ke server.

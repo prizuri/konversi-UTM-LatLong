@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101c2e">
+  <meta name="description" content="Konversi CSV koordinat UTM menjadi Latitude dan Longitude WGS84. Offline, aman, dan siap impor Google Earth Pro.">
+  <title>Koordinat — Konverter UTM ke Google Earth</title>
+  <style>
+    :root{--navy:#111d30;--navy2:#172640;--ink:#182539;--muted:#67768b;--line:#dee6ed;--bg:#f4f7fa;--white:#fff;--blue:#2377e8;--teal:#087e7e;--green:#0c835a;--red:#c04442;--amber:#9b6309;--ring:rgba(35,119,232,.19)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font:14px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--ink)}button,input,select{font:inherit}button{cursor:pointer}a{color:inherit}.wrap{max-width:1110px;margin:0 auto;padding:0 28px}.topbar{background:var(--navy);color:#fff}.topbar .wrap{height:74px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:11px;font-size:19px;font-weight:750;letter-spacing:-.6px}.brand-mark{display:grid;place-items:center;width:37px;height:37px;border-radius:11px;background:#23b5a3;color:var(--navy);font-size:21px;font-weight:800}.brand small{font-weight:500;color:#93a7bf;margin-left:7px;font-size:12px;letter-spacing:0}.top-badge{display:flex;align-items:center;gap:7px;color:#c7d3e0;font-size:12px}.dot{width:8px;height:8px;border-radius:50%;background:#40ca93;box-shadow:0 0 0 3px rgba(64,202,147,.12)}
+    .hero{background:linear-gradient(125deg,#111d30 20%,#1e3753 75%,#124a55 110%);color:#fff;padding:48px 0 107px;position:relative;overflow:hidden}.hero::after{content:"";position:absolute;right:-130px;top:-215px;width:630px;height:630px;border:1px solid rgba(255,255,255,.08);border-radius:50%;box-shadow:0 0 0 95px rgba(255,255,255,.025),0 0 0 185px rgba(255,255,255,.017);pointer-events:none}.eyebrow{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;font-weight:800;color:#5de4d3;display:flex;align-items:center;gap:10px}.eyebrow:before{content:"";width:23px;height:2px;background:#5de4d3}.hero h1{max-width:780px;font-size:clamp(31px,4.6vw,48px);line-height:1.13;margin:17px 0 16px;letter-spacing:-1.8px;font-weight:790}.hero h1 span{color:#79dfd2}.hero p{color:#c1d1dc;font-size:15px;max-width:650px;margin:0;line-height:1.8}.pills{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.pill{border:1px solid rgba(234,247,255,.19);border-radius:100px;padding:6px 12px;font-size:12px;color:#d1e4eb;background:rgba(255,255,255,.05)}
+    main{position:relative;margin-top:-66px;padding-bottom:60px}.app-grid{display:grid;grid-template-columns:1.09fr .91fr;gap:20px;align-items:stretch}.panel{background:#fff;border:1px solid var(--line);border-radius:17px;box-shadow:0 14px 40px rgba(23,46,74,.055);overflow:hidden}.panel-pad{padding:25px}.panel-head{display:flex;align-items:center;gap:12px;margin-bottom:21px}.step{background:#e8f0ff;color:#2261bf;font-weight:850;font-size:12px;min-width:30px;height:30px;border-radius:9px;display:grid;place-items:center}.panel h2{font-size:17px;letter-spacing:-.4px;margin:0}.panel-sub{color:var(--muted);font-size:12px;margin:2px 0 0}.upload{min-height:205px;border:2px dashed #b9c9da;border-radius:13px;background:#f8fbfe;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:23px;outline:none;transition:.18s}.upload:hover,.upload.dragover,.upload:focus-visible{border-color:var(--blue);background:#f1f7ff;box-shadow:0 0 0 3px var(--ring)}.upload svg{margin-bottom:10px;color:var(--blue)}.upload strong{font-size:15px}.upload .hint{font-size:12px;color:var(--muted);margin-top:5px}.upload .file-button{display:inline-flex;margin-top:17px;padding:10px 16px;border-radius:9px;background:var(--navy);color:#fff;font-weight:700;font-size:12px}.upload .file-button:hover{background:#263c5e}.selected-file{display:none;align-items:center;gap:11px;background:#eef8f5;color:#146e52;margin-top:13px;border:1px solid #d5eee4;border-radius:9px;padding:10px 12px}.selected-file.show{display:flex}.selected-file .filename{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.selected-file small{color:#5e8576}.selected-file button{margin-left:auto;border:0;background:transparent;color:#b04343;font-size:22px;line-height:1}.mini-actions{display:flex;align-items:center;justify-content:space-between;margin-top:17px;gap:10px;flex-wrap:wrap}.linkbutton{border:none;background:transparent;color:#245fb2;padding:4px 0;text-decoration:underline;text-underline-offset:3px;font-size:12px;font-weight:700}.linkbutton:hover{color:#123d82}.meta{color:#8996a7;font-size:11px}.label{font-weight:720;color:#33445b;font-size:12px;margin:0 0 7px;display:block}.settings-row{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:16px}.control{width:100%;border:1px solid #cfdae6;padding:11px 12px;border-radius:9px;background:white;color:#1c3149;outline:none;min-height:43px}.control:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--ring)}.form-help{font-size:11px;color:var(--muted);margin:-6px 0 14px}.small-note{background:#f1f7ff;border:1px solid #dce9fb;color:#385d8b;padding:11px 13px;border-radius:9px;font-size:12px;line-height:1.6;margin:16px 0 0}.checkbox{display:flex;align-items:center;gap:9px;font-size:12px;color:#526277;cursor:pointer;user-select:none}.checkbox input{accent-color:var(--blue);width:15px;height:15px}.mapping{margin-top:19px;border-top:1px solid var(--line);padding-top:17px}.mapping h3{font-size:13px;margin:0 0 11px}.mapping-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.mapping-grid label{font-size:11px}.mapping-grid .control{font-size:12px;padding:9px 7px;min-height:39px}.mapping-empty{border:1px dashed #d8e0e9;border-radius:9px;text-align:center;padding:19px;color:#9eacbb;font-size:12px;background:#fcfdff}
+    .results{margin-top:20px}.result-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:25px 25px 17px}.result-top h2{margin:0;font-size:18px}.result-top p{font-size:12px;color:var(--muted);margin:2px 0 0}.stats{display:flex;gap:9px;flex-wrap:wrap}.stat{background:#eff3f7;border:1px solid #e6ebf0;border-radius:9px;padding:7px 12px;color:#526378;font-size:12px;font-weight:750}.stat.good{background:#eaf8f2;border-color:#d3edde;color:#0c815d}.stat.bad{background:#fff0ee;border-color:#f3dbd5;color:#a4463a}.stat strong{font-size:17px;margin-right:5px}.result-empty{padding:56px 15px 65px;text-align:center;color:#8494a6}.result-empty svg{display:block;margin:0 auto 11px;color:#bcc9d7}.result-empty strong{display:block;color:#44566d;margin-bottom:5px;font-size:14px}.result-empty p{margin:0;font-size:12px}.table-scroll{overflow-x:auto;width:100%}table{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}th{background:#f6f8fb;text-align:left;padding:12px 16px;border-block:1px solid #e8eef3;color:#6a7a8c;font-weight:760;letter-spacing:.2px}td{padding:12px 16px;border-bottom:1px solid #edf1f5;color:#32435a}tbody tr:last-child td{border-bottom:0}tbody tr:hover{background:#f8fbfe}.coord{font-variant-numeric:tabular-nums;font-feature-settings:"tnum";font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px}.result-name{font-weight:770;color:#1e527a}.preview-footer{border-top:1px solid #edf1f5;font-size:11px;color:#7a899c;padding:12px 25px;background:#fff}.message{display:none;margin:0 25px 20px;padding:12px 14px;border-radius:9px;border:1px solid #f0d8bc;background:#fff9ee;color:#8c5f1e;font-size:12px}.message.show{display:block}.message.error{border-color:#eed3d0;background:#fff6f5;color:#aa4439}.message p{margin:0 0 5px}.message p:last-child{margin-bottom:0}.actions{padding:20px 25px 24px;display:flex;align-items:center;gap:11px;flex-wrap:wrap;border-top:1px solid #eef1f5}.btn{border:0;border-radius:10px;padding:12px 18px;font-size:13px;font-weight:760;display:inline-flex;align-items:center;gap:9px;justify-content:center;transition:.15s}.btn.primary{background:#087d70;color:#fff;box-shadow:0 5px 13px rgba(8,125,112,.15)}.btn.primary:hover:not(:disabled){background:#05685f;transform:translateY(-1px)}.btn.secondary{background:#edf2f8;color:#254361;border:1px solid #dce6ed}.btn.secondary:hover:not(:disabled){background:#e0eaf4}.btn:disabled{opacity:.43;cursor:not-allowed;box-shadow:none;transform:none}.actions .tip{color:#788a9c;font-size:11px;margin-left:auto}.section-foot{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin-top:23px}.note-card{border:1px solid #e2e9f0;background:#fff;border-radius:13px;padding:19px}.note-icon{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:#ecf5ff;color:#2377e8;margin-bottom:11px;font-size:18px}.note-card h3{font-size:13px;margin:0 0 7px}.note-card p{margin:0;color:#718195;font-size:12px;line-height:1.7}.footer{border-top:1px solid #dde5ec;padding:18px 0 26px;color:#8491a1;font-size:11px}.footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    @media(max-width:800px){.app-grid{grid-template-columns:1fr}.hero{padding:35px 0 96px}.hero h1{font-size:34px}.section-foot{grid-template-columns:1fr}.actions .tip{margin-left:0;width:100%}}@media(max-width:520px){.wrap{padding:0 16px}.topbar .wrap{height:64px}.brand{font-size:16px}.brand small{display:none}.top-badge{font-size:10px}.panel-pad{padding:19px}.result-top{padding:19px 19px 13px}.actions{padding:17px 19px}.hero h1{font-size:30px;letter-spacing:-1px}.hero p{font-size:13px}.settings-row{gap:9px}.mapping-grid{grid-template-columns:1fr}.upload{min-height:190px}.actions .btn{flex:1;min-width:130px}.message{margin-inline:19px}}
+  </style>
+</head>
+<body>
+<header class="topbar"><div class="wrap"><div class="brand"><span class="brand-mark">⌖</span> Koordinat <small>TOOLS</small></div><div class="top-badge"><span class="dot"></span> 100% offline · Data tetap di perangkat</div></div></header>
+<section class="hero"><div class="wrap"><div class="eyebrow">ALAT KONVERSI KOORDINAT</div><h1>Dari CSV UTM, langsung ke <span>Google Earth.</span></h1><p>Unggah file koordinat survei, konversi otomatis ke Latitude &amp; Longitude (WGS84), lalu unduh CSV siap impor. Tanpa memasukkan titik satu per satu.</p><div class="pills"><span class="pill">CSV → Latitude / Longitude</span><span class="pill">UTM Zona 1–60</span><span class="pill">Ekspor KML</span><span class="pill">Tanpa instalasi</span></div></div></section>
+<main class="wrap">
+  <div class="app-grid">
+    <section class="panel"><div class="panel-pad"><div class="panel-head"><span class="step">01</span><div><h2>Unggah file CSV</h2><p class="panel-sub">Bisa ekspor langsung dari Excel</p></div></div>
+      <div class="upload" id="uploadZone" role="button" tabindex="0" aria-label="Unggah atau seret file CSV"><svg width="46" height="46" viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="3" y="3" width="42" height="42" rx="12" fill="#E6F0FF"/><path d="M24 33V16m0 0-6 6m6-6 6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 33.5h20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg><strong>Tarik file CSV ke sini</strong><span class="hint">atau klik untuk memilih file dari perangkat Anda</span><span class="file-button">Pilih file CSV ↗</span></div>
+      <input type="file" id="fileInput" accept=".csv,.txt,text/csv,text/plain" hidden>
+      <div class="selected-file" id="selectedFile"><span>📄</span><span style="min-width:0"><span class="filename" id="fileName"></span><br><small id="fileDetails"></small></span><button type="button" id="clearBtn" title="Hapus file" aria-label="Hapus file">×</button></div>
+      <div class="mini-actions"><button type="button" class="linkbutton" id="demoBtn">↗ Coba dengan data contoh (MT, BT, MO)</button><button type="button" class="linkbutton" id="sampleBtn">↓ Unduh contoh CSV</button></div>
+    </div></section>
+    <section class="panel"><div class="panel-pad"><div class="panel-head"><span class="step">02</span><div><h2>Pengaturan koordinat</h2><p class="panel-sub">Sesuaikan dengan sistem koordinat survei</p></div></div>
+      <div class="settings-row" style="grid-template-columns:1fr"><div><label class="label" for="coordType">Jenis koordinat dalam CSV</label><select class="control" id="coordType"><option value="auto">Deteksi otomatis (direkomendasikan)</option><option value="utm">UTM (Easting / Northing dalam meter)</option><option value="geo">Latitude / Longitude (derajat desimal)</option></select></div></div>
+      <div class="settings-row"><div><label class="label" for="zone">Zona UTM</label><select class="control" id="zone" aria-label="Zona UTM"></select></div><div><label class="label" for="hemi">Belahan bumi</label><select class="control" id="hemi"><option value="S">Selatan (S)</option><option value="N">Utara (N)</option></select></div></div>
+      <p class="form-help" id="epsgText">Sistem koordinat sumber: WGS 84 / UTM zone 48S · EPSG:32748</p>
+      <p class="form-help" id="typeHelp" style="margin-top:-5px">File dengan angka lintang/bujur yang sudah dikonversi akan dikenali tanpa dikonversi ulang.</p>
+      <label class="checkbox"><input type="checkbox" id="keepOriginal"> Sertakan semua kolom asli pada CSV hasil</label>
+      <div class="mapping"><h3>Hubungkan kolom file CSV</h3><div class="mapping-grid" id="mappingGrid" style="display:none"><label><span class="label">Nama titik</span><select id="colName" class="control"></select></label><label><span class="label">Kolom 1: X / Latitude</span><select id="colEast" class="control"></select></label><label><span class="label">Kolom 2: Y / Longitude</span><select id="colNorth" class="control"></select></label></div><div class="mapping-empty" id="mappingEmpty">Unggah file agar kolom dapat dikenali otomatis.</div></div>
+      <div class="small-note">ⓘ <strong>Deteksi berdasarkan nilai, bukan nama kolom.</strong> Data MT/BT/MO yang berisi 288822 / 9813834 dianggap UTM. Data -1.683365 / 103.101739 dianggap sudah Latitude / Longitude. Zona <strong>48S</strong> hanya asumsi awal, bukan verifikasi datum survei.</div>
+    </div></section>
+  </div>
+  <section class="panel results" id="hasil"><div class="result-top"><div><h2>Hasil konversi</h2><p>Preview koordinat dalam derajat desimal, siap untuk Google Earth Pro</p><p id="modeSummary" style="margin-top:7px;font-weight:650;color:#1e527a"></p></div><div class="stats"><span class="stat" id="totalStat"><strong>0</strong> total</span><span class="stat good" id="validStat"><strong>0</strong> berhasil</span><span class="stat bad" id="invalidStat" style="display:none"><strong>0</strong> dilewati</span></div></div>
+    <div class="result-empty" id="resultEmpty"><svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="8" y="6" width="36" height="40" rx="8" stroke="currentColor" stroke-width="2"/><path d="M17 18h18m-18 8h18m-18 8h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><strong>Belum ada data untuk ditampilkan</strong><p>Unggah CSV atau gunakan data contoh untuk memulai.</p></div>
+    <div id="tableSection" style="display:none"><div class="table-scroll"><table><thead><tr><th>Nama Titik</th><th>Input kolom 1</th><th>Input kolom 2</th><th>Latitude (°)</th><th>Longitude (°)</th></tr></thead><tbody id="tableBody"></tbody></table></div><div class="preview-footer" id="previewFooter"></div></div>
+    <div class="message" id="message" role="status"></div>
+    <div class="actions"><button type="button" class="btn primary" id="downloadCsv" disabled><span>↓</span> Unduh CSV hasil</button><button type="button" class="btn secondary" id="downloadKml" disabled><span>◉</span> Unduh KML Google Earth</button><span class="tip">Hanya baris valid yang diekspor. Data yang sudah Lat/Lon tidak dikonversi ulang.</span></div>
+  </section>
+  <div class="section-foot"><div class="note-card"><div class="note-icon">⌖</div><h3>UTM → WGS84</h3><p>Mengubah koordinat UTM dalam meter menjadi lintang dan bujur. Jika input sudah berupa derajat, nilainya dipertahankan.</p></div><div class="note-card"><div class="note-icon">▤</div><h3>Format Excel fleksibel</h3><p>Mendukung pemisah koma, titik koma, atau tab; angka desimal bertitik atau berkoma. Nama kolom dapat dikoreksi dengan pemetaan.</p></div><div class="note-card"><div class="note-icon">◎</div><h3>Langsung Google Earth</h3><p>Unduh CSV, atau file KML yang berisi placemark berlabel. Semua diproses di browser, tanpa mengunggah ke server.</p></div></div>
+</main>
+<footer class="footer"><div class="wrap"><span>KOORDINAT · Konverter CSV UTM ke WGS84</span><span>Periksa zona, datum, dan hasil plot sebelum digunakan untuk survei resmi.</span></div></footer>
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const $zone=$('zone'),$hemi=$('hemi'),$type=$('coordType'),$file=$('fileInput'),$name=$('colName'),$east=$('colEast'),$north=$('colNorth');
+const SAMPLE='Nomor,Latitude,Longitude\nMT-1,288822.816,9813834.248\nBT-1,340419.414,9825632.174\nMO-1,216246.261,9836002.596\n';
+let table=[],headers=[],filename='data_utm.csv',converted=[],rawCount=0, currentDelimiter=',';
+for(let i=1;i<=60;i++){let o=document.createElement('option');o.value=String(i);o.textContent=String(i);if(i===48)o.selected=true;$zone.appendChild(o)}
+function normalize(s){return String(s??'').trim().toLowerCase().replace(/[^a-z0-9]/g,'')}
+function splitHeaders(text){let first=text.replace(/^\uFEFF/,'').split(/\r\n|\n|\r/).find(v=>v.trim())||'';let opts=[',',';','\t','|'];let counts=opts.map(d=>{let count=0,quote=false;for(let i=0;i<first.length;i++){let c=first[i];if(c==='"'){if(first[i+1]==='"'&&quote){i++}else quote=!quote;}else if(c===d&&!quote)count++}return count});let idx=counts.indexOf(Math.max(...counts));return opts[idx]}
+function parseCSV(text,delim){const out=[];let row=[],cell='',inQuotes=false;const s=text.replace(/^\uFEFF/,'');for(let i=0;i<s.length;i++){const c=s[i];if(c==='"'){if(inQuotes&&s[i+1]==='"'){cell+='"';i++}else if(!inQuotes&&cell.trim()===''){inQuotes=true;cell=''}else if(inQuotes){inQuotes=false}else cell+=c}else if(c===delim&&!inQuotes){row.push(cell.trim());cell=''}else if((c==='\n'||c==='\r')&&!inQuotes){if(c==='\r'&&s[i+1]==='\n')i++;row.push(cell.trim());if(row.some(x=>x!==''))out.push(row);row=[];cell=''}else cell+=c}row.push(cell.trim());if(row.some(x=>x!==''))out.push(row);return out}
+function numberFromCSV(text){let s=String(text??'').trim().replace(/\s/g,'');if(!s||s.includes('#'))return NaN;if(s.includes(',')&&s.includes('.')){if(s.lastIndexOf(',')>s.lastIndexOf('.'))s=s.replace(/\./g,'').replace(',','.');else s=s.replace(/,/g,'')}else if(s.includes(','))s=s.replace(',','.');if(!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(s))return NaN;return Number(s)}
+// Inverse Transverse Mercator projection, WGS 84 ellipsoid (UTM EPSG:326xx / 327xx).
+function utmToWGS84(easting,northing,zone,hemisphere){
+ const a=6378137,f=1/298.257223563,k0=0.9996,e2=f*(2-f),ep2=e2/(1-e2);
+ const x=easting-500000, y=hemisphere==='S'?northing-10000000:northing;
+ const M=y/k0;const mu=M/(a*(1-e2/4-3*e2*e2/64-5*e2*e2*e2/256));
+ const e1=(1-Math.sqrt(1-e2))/(1+Math.sqrt(1-e2));
+ const phi1=mu+(3*e1/2-27*Math.pow(e1,3)/32)*Math.sin(2*mu)+(21*e1*e1/16-55*Math.pow(e1,4)/32)*Math.sin(4*mu)+(151*Math.pow(e1,3)/96)*Math.sin(6*mu)+(1097*Math.pow(e1,4)/512)*Math.sin(8*mu);
+ const sinPhi=Math.sin(phi1), cosPhi=Math.cos(phi1),tanPhi=Math.tan(phi1);
+ const N1=a/Math.sqrt(1-e2*sinPhi*sinPhi);
+ const T1=tanPhi*tanPhi,C1=ep2*cosPhi*cosPhi,R1=a*(1-e2)/Math.pow(1-e2*sinPhi*sinPhi,1.5),D=x/(N1*k0);
+ const latitude=phi1-(N1*tanPhi/R1)*(D*D/2-(5+3*T1+10*C1-4*C1*C1-9*ep2)*Math.pow(D,4)/24+(61+90*T1+298*C1+45*T1*T1-252*ep2-3*C1*C1)*Math.pow(D,6)/720);
+ const longitude=(zone*6-183)*Math.PI/180+(D-(1+2*T1+C1)*Math.pow(D,3)/6+(5-2*C1+28*T1-3*C1*C1+8*ep2+24*T1*T1)*Math.pow(D,5)/120)/cosPhi;
+ return {latitude:latitude*180/Math.PI,longitude:longitude*180/Math.PI};
+}
+function autoField(kind){const patterns={name:[/^nomor$/,/^namatitik$/,/^nama$/,/^titik$/,/^pointname$/,/^pointid$/,/^id$/,/^no$/],east:[/^easting$/,/^utmeasting$/,/^utmx$/,/^x$/,/^koordinatx$/,/^latitude$/,/^lat$/],north:[/^northing$/,/^utmnorthing$/,/^utmy$/,/^y$/,/^koordinaty$/,/^longitude$/,/^lon$/,/^lng$/]};for(let p of patterns[kind]){let i=headers.findIndex(h=>p.test(normalize(h)));if(i!==-1)return i}return kind==='name'?0:kind==='east'?Math.min(1,headers.length-1):Math.min(2,headers.length-1)}
+function options(select,canNone){select.innerHTML='';if(canNone){let o=document.createElement('option');o.value='-1';o.textContent='(Nomor urut otomatis)';select.appendChild(o)}headers.forEach((h,i)=>{let o=document.createElement('option');o.value=String(i);o.textContent=h||('Kolom '+(i+1));select.appendChild(o)})}
+function loadText(text,name){try{const delim=splitHeaders(text),rows=parseCSV(text,delim);if(rows.length<2||rows[0].length<2)throw Error('File CSV harus memiliki header dan minimal satu baris data dengan dua kolom koordinat. Periksa pemisah koma atau titik koma.');currentDelimiter=delim;headers=rows[0].map((h,i)=>h||('Kolom '+(i+1)));table=rows.slice(1);rawCount=table.length;filename=name;options($name,true);options($east,false);options($north,false);$name.value=String(autoField('name'));$east.value=String(autoField('east'));$north.value=String(autoField('north'));$('mappingGrid').style.display='grid';$('mappingEmpty').style.display='none';$('fileName').textContent=name;$('fileDetails').textContent=rawCount+' baris · '+headers.length+' kolom · pemisah '+(delim==='\t'?'tab':delim===';'?'titik koma':'koma');$('selectedFile').classList.add('show');process();}catch(err){reset();showMessage([err.message],true)}}
+function showMessage(messages,error){const el=$('message');el.textContent='';if(!messages.length){el.className='message';return}messages.slice(0,9).forEach(msg=>{let p=document.createElement('p');p.textContent=msg;el.appendChild(p)});if(messages.length>9){let p=document.createElement('p');p.textContent='…dan '+(messages.length-9)+' masalah lainnya.';el.appendChild(p)}el.className='message show'+(error?' error':'')}
+function classifyCoordinates(e,n){
+  // Longitude is column 2; UTM uses Easting/Northing (metres).
+  if(!Number.isFinite(e)||!Number.isFinite(n)) return 'invalid';
+  if(e>=-90&&e<=90&&n>=-180&&n<=180) return 'geo';
+  if(e>=100000&&e<=900000&&n>=0&&n<=10000000) return 'utm';
+  if(e>=-180&&e<=180&&n>=-90&&n<=90) return 'swapped';
+  return 'unknown';
+}
+function process(){
+  const zone=Number($zone.value),hemi=$hemi.value,mode=$type.value;
+  $('epsgText').textContent='Untuk data UTM: WGS 84 / UTM zone '+zone+hemi+' · EPSG:'+(hemi==='S'?'327':'326')+String(zone).padStart(2,'0');
+  converted=[]; const invalid=[]; let total=table.length;
+  const ei=Number($east.value),ni=Number($north.value),idi=Number($name.value);
+  const mappedSame=ei===ni;
+  if(mappedSame&&total)invalid.push('Kolom 1 dan kolom 2 tidak boleh sama. Pilih dua kolom koordinat yang berbeda.');
+  let utmCount=0,geoCount=0;
+  for(let i=0;i<total&&!mappedSame;i++){
+    const row=table[i],e=numberFromCSV(row[ei]),n=numberFromCSV(row[ni]);
+    const name=idi<0?String(i+1):String(row[idi]??'').trim()||String(i+1);
+    if(!Number.isFinite(e)||!Number.isFinite(n)){
+      invalid.push('Baris '+(i+2)+' ('+name+'): angka pada kolom 1/2 tidak terbaca. Periksa koma desimal atau tanda ####.');continue;
+    }
+    const detected=classifyCoordinates(e,n);
+    if(detected==='swapped'){
+      invalid.push('Baris '+(i+2)+' ('+name+'): tampaknya Longitude dan Latitude tertukar. Pilih ulang kolom 1 (Latitude) / kolom 2 (Longitude).');continue;
+    }
+    if(detected==='unknown'||detected==='invalid'){
+      invalid.push('Baris '+(i+2)+' ('+name+'): nilai bukan UTM yang lazim maupun Latitude/Longitude valid. Periksa pemetaan kolom dan pemisah desimal.');continue;
+    }
+    if(mode!=='auto'&&detected!==mode){
+      invalid.push('Baris '+(i+2)+' ('+name+'): data terdeteksi '+(detected==='geo'?'Latitude/Longitude yang SUDAH dikonversi':'UTM')+'. Ubah "Jenis koordinat dalam CSV" ke "Deteksi otomatis".');continue;
+    }
+    let pt;
+    if(detected==='utm'){
+      pt=utmToWGS84(e,n,zone,hemi);
+      if(!Number.isFinite(pt.latitude)||!Number.isFinite(pt.longitude)||Math.abs(pt.latitude)>90||Math.abs(pt.longitude)>180){
+        invalid.push('Baris '+(i+2)+' ('+name+'): hasil konversi tidak valid. Cek zona dan hemisfer.');continue;
+      }
+      utmCount++;
+    }else{pt={latitude:e,longitude:n};geoCount++}
+    converted.push({name,e,n,lat:pt.latitude,lon:pt.longitude,inputType:detected,original:row});
+  }
+  $('totalStat').innerHTML='<strong>'+total+'</strong> total';
+  $('validStat').innerHTML='<strong>'+converted.length+'</strong> berhasil';
+  $('invalidStat').innerHTML='<strong>'+(total-converted.length)+'</strong> dilewati';
+  $('invalidStat').style.display=total>converted.length?'inline-block':'none';
+  $('downloadCsv').disabled=!converted.length;$('downloadKml').disabled=!converted.length;
+  $('resultEmpty').style.display=converted.length?'none':'block';
+  $('tableSection').style.display=converted.length?'block':'none';
+  $('modeSummary').textContent=converted.length?(utmCount+' titik UTM dikonversi · '+geoCount+' titik sudah Latitude/Longitude (tidak dikonversi ulang)'):'';
+  let tbody=$('tableBody');tbody.replaceChildren();
+  converted.slice(0,10).forEach(p=>{let tr=document.createElement('tr');
+    [p.name,p.e.toString(),p.n.toString(),p.lat.toFixed(9),p.lon.toFixed(9)].forEach((value,i)=>{
+      let td=document.createElement('td');td.textContent=value;td.className=i===0?'result-name':i>0?'coord':'';tr.appendChild(td)});
+    tbody.appendChild(tr)
+  });
+  $('previewFooter').textContent='Menampilkan '+Math.min(10,converted.length)+' dari '+converted.length+' titik valid · Koordinat geografis WGS84 dalam derajat desimal (9 angka di belakang koma).';
+  const warnings=[];
+  if(utmCount&&normalize(headers[ei])==='latitude'&&normalize(headers[ni])==='longitude'){
+    warnings.push('Nama kolom “Latitude/Longitude” ternyata berisi nilai UTM (meter). Tidak masalah: sistem otomatis mengonversi sebagai X/Y.');
+  }
+  if(geoCount&&!utmCount){
+    warnings.push('CSV Anda sudah berisi Latitude/Longitude dalam derajat desimal. Tidak perlu dikonversi lagi; bisa langsung diunduh atau diekspor ke KML.');
+  }
+  if(utmCount&&geoCount){warnings.push('CSV memuat campuran titik UTM dan Latitude/Longitude. Masing-masing diproses sesuai format angkanya. Periksa sumber data.');}
+  if(invalid.length){warnings.push(...invalid.slice(0,6));if(invalid.length>6)warnings.push('…serta '+(invalid.length-6)+' baris lainnya yang tidak dapat diproses.');}
+  if(total&&!converted.length&&mappedSame)warnings.unshift('Perbaiki pemetaan kolom sebelum melanjutkan.');
+  showMessage(warnings,total>0&&!converted.length);
+}
+
+function reset(){$file.value='';headers=[];table=[];converted=[];rawCount=0;filename='data_utm.csv';$('selectedFile').classList.remove('show');$('mappingGrid').style.display='none';$('mappingEmpty').style.display='block';$('resultEmpty').style.display='block';$('tableSection').style.display='none';$('totalStat').innerHTML='<strong>0</strong> total';$('validStat').innerHTML='<strong>0</strong> berhasil';$('invalidStat').style.display='none';$('modeSummary').textContent='';$('downloadCsv').disabled=true;$('downloadKml').disabled=true;showMessage([],false)}
+function csvCell(v){const s=String(v??'');return /[",\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
+function download(data,type,name){const blob=new Blob([data],{type});const url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+function outputCsv(){if(!converted.length)return;const keep=$('keepOriginal').checked;const head=keep?headers.concat(['Nama_Titik','Latitude_WGS84','Longitude_WGS84']):['Nomor','Latitude','Longitude'];const lines=[head.map(csvCell).join(',')];for(let p of converted){let row=keep?p.original.concat([p.name,p.lat.toFixed(9),p.lon.toFixed(9)]):[p.name,p.lat.toFixed(9),p.lon.toFixed(9)];lines.push(row.map(csvCell).join(','))}let stem=filename.replace(/\.[^.]+$/,'').replace(/[^a-zA-Z0-9_\-]/g,'_');download('\uFEFF'+lines.join('\r\n')+'\r\n','text/csv;charset=utf-8',stem+'_LatLon_WGS84.csv')}
+function xmlEscape(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]))}
+function outputKml(){if(!converted.length)return;const zone=$zone.value,hem=$hemi.value,folderMap=new Map();for(let p of converted){const prefix=p.name.match(/^([A-Za-z]+)[- _]/);const group=prefix?prefix[1].toUpperCase():'Titik lainnya';if(!folderMap.has(group))folderMap.set(group,[]);folderMap.get(group).push(p)}let folders='';for(let [group,pts] of folderMap){folders+='<Folder><name>'+xmlEscape(group)+'</name>';for(let p of pts){folders+='<Placemark><name>'+xmlEscape(p.name)+'</name><description>'+xmlEscape(''+(p.inputType==='utm'?'Easting: '+p.e+' m | Northing: '+p.n+' m | WGS84 UTM Zona '+zone+hem:'Sudah Latitude/Longitude (WGS84)'))+'</description><Point><coordinates>'+p.lon.toFixed(9)+','+p.lat.toFixed(9)+',0</coordinates></Point></Placemark>'}folders+='</Folder>'}const kml='<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>Placemark hasil konversi CSV</name><description>Asumsi sumber WGS84 UTM zone '+zone+hem+'. Verifikasi zona dan datum survei.</description>'+folders+'</Document></kml>';download(kml,'application/vnd.google-earth.kml+xml;charset=utf-8',filename.replace(/\.[^.]+$/,'')+'_Google_Earth.kml')}
+$zone.addEventListener('change',process);$hemi.addEventListener('change',process);$type.addEventListener('change',process);[$name,$east,$north].forEach(el=>el.addEventListener('change',process));$('demoBtn').addEventListener('click',()=>loadText(SAMPLE,'Contoh_MT_BT_MO.csv'));$('sampleBtn').addEventListener('click',()=>download('\uFEFF'+SAMPLE,'text/csv;charset=utf-8','Contoh_Koordinat_UTM.csv'));$('clearBtn').addEventListener('click',reset);$('downloadCsv').addEventListener('click',outputCsv);$('downloadKml').addEventListener('click',outputKml);
+$file.addEventListener('change',async()=>{const file=$file.files[0];if(file)loadText(await file.text(),file.name)});
+const drop=$('uploadZone');drop.addEventListener('click',()=>$file.click());drop.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$file.click()}});['dragenter','dragover'].forEach(type=>drop.addEventListener(type,e=>{e.preventDefault();drop.classList.add('dragover')}));['dragleave','drop'].forEach(type=>drop.addEventListener(type,e=>{e.preventDefault();drop.classList.remove('dragover')}));drop.addEventListener('drop',async e=>{const file=e.dataTransfer.files[0];if(file)loadText(await file.text(),file.name)});
+process();
+})();
+</script>
+</body>
+</html>
